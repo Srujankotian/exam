@@ -1,0 +1,65 @@
+1: RSA keys (Op enSSL)
+sudo apt-get update && sudo apt-get install openssl -y
+m kdir bloc kchain_crypto && cd blockc hain_c rypto
+openssl genpkey -algorithm RSA -out private_key.pem -aes256
+openssl rsa -in private_key.pem -text -noout
+openssl rsa -pubout -in private_key.pem -out public _key.pem
+cat private_key.pem ; cat public_key.pem
+EXP 2: M ini b lockchain (Python)
+sudo apt update && sudo apt install python3.12 python3.12-venv python3.12-dev -y
+nano bloc kchain.py # Ctrl+O, Enter, Ctrl+X
+python3.12 bloc kchain.py
+im port hashlib, json, time
+class Bloc k:
+def __init__(self, index, prev_hash, data, timestam p):
+self.index = index
+self.prev_hash = prev_hash
+self.data = data
+self.tim estam p = tim estam p
+self.hash = self.hash_block()
+def hash_block(self):
+d = {"index": self.index, "prev_hash": self.prev_hash,
+"data": self.data, "tim estamp": self.tim estamp}
+s = json.dumps(d, sort _keys=True)
+return hashlib.sha256(s.encode()).hexdigest()
+def create_genesis_bloc k():
+return Bloc k(0, "0", "Genesis Bloc k", tim e.time())
+def next_block(last, data):
+index = last.index + 1
+ts = tim e.tim e()
+prev_hash = last.hash
+return Bloc k(index, prev_hash, data, ts)
+if __nam e__ == "__m ain__":
+bloc kchain = [c reate_genesis_block()]
+prev = blockchain[0]
+print(f"Genesis Block Hash: {prev.hash}\n")
+for i in range(1, 6):
+nb = next_block(prev, f"Block {i} Data")
+blockc hain.append(nb)
+prev = nb
+print(f"Block #{nb.index} Hash: {nb.hash}")
+print(f" -> Previous Hash: {nb.prev_hash}\n")
+EXP 3: Smart contract (Rem ix + Ganache)
+// SPDX-Lic ense-Identifier: MIT
+pragma solidity ^0.8.20;
+contract Sim pleStorage {
+uint256 private storedData;
+func tion set(uint256 x) public { storedData = x; }
+func tion get() public view returns (uint256) { return storedData; }
+}
+Rem ix VM : rem ix.live > new file Simp leSto rage.sol > paste > Com pile (green tick) > Environment = Rem ix VM (Cancun) > Deploy > set 42 >
+Transac t > g et > 42.
+Ganache:
+sudo apt update && sudo apt install -y nodejs npm
+sudo npm install -g ganac he
+ganache # keep open, RPC 127.0.0.1:8545
+EXP 4: Sepolia testnet (Rem ix + M etaMask)
+1) MetaMask: create w allet > enable test networks > Sepolia. 2) Faucet (G oogle Cloud/Alchem y): paste address for test ETH. 3) Remix:
+new file below, com piler 0.8.2 0, Compile (Ctrl+S). 4) Environment = Injec ted Provider - MetaM ask > Deploy > Confirm . 5) sto re 123 >
+Transac t > Confirm > retrieve > 123. 6) Cop y tx hash > sepo lia.etherscan.io > Status = Suc cess. Screenshot.
+// SPDX-Lic ense-Identifier: MIT
+pragma solidity ^0.8.0;
+contract Sim pleStorage {
+uint256 public storedValue;
+func tion store(uint256 _value) public { storedValue = _value; }
+func tion retrieve() public view returns (uint256) { return storedValue; } }.
